@@ -1,8 +1,4 @@
-
-#Autor: Thiago Coutinho
-
-#language: pt
-#encoding: utf-8
+# language: pt
 
 @login
 Funcionalidade: Login
@@ -15,5 +11,4 @@ Funcionalidade: Login
 		| login     | senha        |
 		| tcoutinho | Coutinho.123 |
   E clicar no botao entrar
-  Entao o usuario deveria ser redirecionado para a pagina inicial do sipac
-    
+  Entao o usuario deveria ser redirecionado para a pagina inicial do sipac    

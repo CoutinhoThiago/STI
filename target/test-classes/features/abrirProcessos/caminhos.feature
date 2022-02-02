@@ -1,12 +1,7 @@
-
-
-#Autor: Thiago Coutinho
-
-#language: pt
-#encoding: utf-8
+# language: pt
 
 @abrirProcessos
-Funcionalidade: Primeira pagina de Abrir Processos
+Funcionalidade: Caminhos ate a tela de primeira tela de abrir processos
 
 	Contexto:
 		Dado um usuario valido logado

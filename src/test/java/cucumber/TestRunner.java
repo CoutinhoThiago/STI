@@ -9,10 +9,11 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
 		features = {
 				//"classpath:features/login/login.feature",
-				"classpath:features/abrirProcessos/caminhos.feature",
+				//"classpath:features/abrirProcessos/caminhos.feature",
 				//"classpath:features/abrirProcessos/abrirProcessos.feature",
+				"classpath:features/abrirProcessos/interessado",
 				}, 
-		tags = "")
+		tags = "@adicionarInteressado")
 public class TestRunner {
 
 }
