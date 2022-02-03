@@ -1,5 +1,6 @@
 # language: pt
 
+@abrirProcessos
 @botoes
 Funcionalidade: Botoes
 
@@ -17,6 +18,8 @@ Funcionalidade: Botoes
 		
 	@removerClassificacaoConarq
 	Cenario: Botao Remover Classificacao CONARQ funcionando corretamente
-		Quando clicar em no botao Remover Classificacao CONARQ
+		Quando adicionar uma classificacao CONARQ 
+		E clicar em no botao Remover Classificacao CONARQ
 		E confirmar o pop-up
 		Entao a Classificacao CONARQ deve ser removida
+		E a mensagem de classificacao CONARQ removida deve aparecer

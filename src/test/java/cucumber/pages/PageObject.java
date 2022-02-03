@@ -33,6 +33,10 @@ public class PageObject {
     public void fechar() {
 		this.driver.quit();
 	}
+    //Resetar navegador
+    public void reload() {
+    	this.driver.navigate().refresh();
+    }
 	
 	//contexto - efetuar login
 	public void efetuarLogin(String login, String senha) {
@@ -43,5 +47,22 @@ public class PageObject {
 		this.driver.findElement(By.name("senha")).sendKeys(senha);
 		//efetuar login
 		this.driver.findElement(By.cssSelector("input[type=submit]")).click();
+	}
+	
+	//mensagens
+	public String getMensagem() {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+		System.out.println(driver.findElement(By.xpath("//*[@id=\"painel-erros\"]/ul/li")).getText());
+		//*[@id="painel-erros"]/ul/li
+		
+		return driver.findElement(By.xpath("//*[@id=\"painel-erros\"]/ul/li")).getText();
+	}
+	//public String getMensagem() throws NoSuchElementException{
+	//	return browser.findElement(By.id("painel-erros")).getText();
+	//}
+	
+	//url
+	public String isPaginaAtual() {
+		return driver.getCurrentUrl();
 	}
 }

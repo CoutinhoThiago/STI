@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 import cucumber.interessado.Interessado;
@@ -21,7 +22,7 @@ public class AbrirProcessosPage extends PageObject{
 	public void irParaOModuloDeProtocolo() throws InterruptedException {
 		this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 		this.driver.findElement(By.cssSelector("#show-modulos-sipac")).click();
-		Thread.sleep(300);//gambiarra
+		Thread.sleep(500);//gambiarra
 		this.driver.findElement(By.cssSelector("#modulos > ul:nth-child(2) > li.protocolo")).click();
 	}
 	public void selecionarOpcaoMenu() {
@@ -70,9 +71,7 @@ public class AbrirProcessosPage extends PageObject{
 			//<input type="submit" name="interessadosForm:j_id_jsp_1757759760_68" value="Inserir">
 		}
 		public void botaoExcluirInteressado() { //interessado
-			this.driver.findElement(By.xpath("//img[@title='Excluir Interessado']")).click();
-			//this.driver.findElement(By.xpath("//alt[@title='Excluir Interessado']")).click();
-			//<img src="/shared/img/delete.gif" alt="Excluir Interessado" title="Excluir Interessado">
+			this.driver.findElement(By.xpath("//*[@id=\"dadosGeraisForm:j_id_jsp_2064664619_182:0:j_id_jsp_2064664619_206\"]/a/img")).click();
 		}
 		//Primeira pagina de abrir processos
 		public void botaoCancelar() {
@@ -87,8 +86,14 @@ public class AbrirProcessosPage extends PageObject{
 			this.driver.findElement(By.xpath("")).click();
 		}
 		//Remover Classificação CONARQ
-		public void removerClassificacao() {
-			this.driver.findElement(By.name("dadosGeraisForm:removerConarq")).click();
+		public void botaoRemoverClassificacao() throws InterruptedException {
+			this.driver.findElement(By.id("dadosGeraisForm:removerConarq")).click();
+			Thread.sleep(500);
+			//<img id="dadosGeraisForm:removerConarq" 
+			//		src="/sipac/img_css/cancel.png" 
+			//		alt="Remover Classificação CONARQ" 
+			//		style="vertical-align:middle;" 
+			//		title="Remover Classificação CONARQ">
 		}
 		
 		//preencher formularios de adicionar interessado
@@ -123,7 +128,7 @@ public class AbrirProcessosPage extends PageObject{
 			}
 			this.driver.findElement(By.cssSelector(cssSelectorNomeServidor)).click();
 			this.driver.findElement(By.cssSelector(cssSelectorNomeServidor)).sendKeys(interessado.getNomeInteressado());
-			Thread.sleep(800);
+			Thread.sleep(2000);
 			this.driver.findElement(By.cssSelector(cssSelectorNomeServidor)).sendKeys(Keys.TAB);
 			if(interessado.isNotificarInteresado() == true) {
 				//this.driver.findElement(By.cssSelector("#dadosGeraisForm\\:notificarInteressado\\:0")).click();
@@ -239,5 +244,30 @@ public class AbrirProcessosPage extends PageObject{
 			
 			this.driver.findElement(By.name("dadosGeraisForm:observacao")).click();
 			this.driver.findElement(By.name("dadosGeraisForm:observacao")).sendKeys(observacao, Keys.TAB);
+		}
+		//preencher assunto do processo CONARQ
+		public void adicionarClassificacaoConarq() throws InterruptedException {
+			this.driver.findElement(By.id("dadosGeraisForm:classificacaoConarq")).click();
+			this.driver.findElement(By.id("dadosGeraisForm:classificacaoConarq")).sendKeys("MODERNIZAÇÃO E REFORMA ADMINISTRATIVA PROJETOS, ESTUDOS E NORMAS"); //001 - MODERNIZAÇÃO E REFORMA ADMINISTRATIVA PROJETOS, ESTUDOS E NORMAS
+
+	        Thread.sleep(700);
+	        
+	        this.driver.findElement(By.id("dadosGeraisForm:classificacaoConarq")).sendKeys(Keys.DOWN);
+	        this.driver.findElement(By.id("dadosGeraisForm:classificacaoConarq")).sendKeys(Keys.ENTER);
+	        
+	        Thread.sleep(700);
+		}
+
+		//Gambiarras
+		//Tela de CI em remover interessado de abrir processos
+		public boolean verificarTelaDeCi() {
+			try {
+				//System.out.println(driver.findElement(By.xpath("//*[@id=\"mensagem-erro\"]/h3")).getText());
+				String telaDeCi = driver.findElement(By.id("mensagem-erro")).getText();
+				return true;
+			} 
+			catch (NoSuchElementException e) {
+				return false;
+			}
 		}
 }

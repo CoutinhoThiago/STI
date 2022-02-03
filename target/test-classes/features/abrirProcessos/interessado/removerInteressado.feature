@@ -1,5 +1,6 @@
 #language: pt
 
+@abrirProcessos
 @interessado
 Funcionalidade: Remover Interessado
 

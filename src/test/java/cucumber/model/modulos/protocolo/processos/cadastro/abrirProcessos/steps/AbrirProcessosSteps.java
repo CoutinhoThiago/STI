@@ -1,5 +1,7 @@
 package cucumber.model.modulos.protocolo.processos.cadastro.abrirProcessos.steps;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public class AbrirProcessosSteps {
 	}
 	@After("@abrirProcessos")
 	public void fim() {
-		//this.abrirProcessos.fechar();
+		this.abrirProcessos.fechar();
 	}
 	
 	//Contexto geral 1
@@ -81,19 +83,37 @@ public class AbrirProcessosSteps {
 		//Botão cancelar funcionando
 		@Quando("clicar em no botao cancelar")
 		public void clicar_em_no_botao_cancelar() {
+			this.abrirProcessos.botaoCancelar();
 		}
 		@Quando("confirmar o pop-up")
 		public void confirmar_o_pop_up() {
+			this.abrirProcessos.confirmarAlert();
 		}
 		@Entao("o usuario deve retornar para a pagina inicial do sipac")
 		public void o_usuario_deve_retornar_para_a_pagina_inicial_do_sipac() {
+			String paginaAtual = this.abrirProcessos.isPaginaAtual();
+			Assert.assertTrue(
+					(paginaAtual.equals("https://homologacaosipac.ufba.br/sipac/protocolo/processo/cadastro/abrir_processo_1.jsf")) || 
+					(paginaAtual.equals("")) || 
+					(paginaAtual.equals("")));
+			
 		}
 		//Botao remover Classificacao CONARQ
+		@Quando("adicionar uma classificacao CONARQ")
+		public void adicionar_uma_classificacao_conarq() throws InterruptedException {
+			this.abrirProcessos.adicionarClassificacaoConarq();
+		}
 		@Quando("clicar em no botao Remover Classificacao CONARQ")
-		public void clicar_em_no_botao_remover_classificacao_conarq() {
+		public void clicar_em_no_botao_remover_classificacao_conarq() throws InterruptedException {
+			this.abrirProcessos.botaoRemoverClassificacao();
 		}
 		@Entao("a Classificacao CONARQ deve ser removida")
 		public void a_classificacao_conarq_deve_ser_removida() {
+		}
+		@Entao("a mensagem de classificacao CONARQ removida deve aparecer")
+		public void a_mensagem_de_classificacao_conarq_removida_deve_aparecer() {
+			String mensagemClassificacao = this.abrirProcessos.getMensagem();
+			Assert.assertEquals("Classificação CONARQ removida com sucesso!",mensagemClassificacao);
 		}
 	
 	
@@ -105,7 +125,8 @@ public class AbrirProcessosSteps {
 			String nomeInteressado = "ELEILDES SILVA DE SOUZA";
 			boolean notificarInteresado = true; //false
 			String email = "eleildes.souza!!@hotmail.com";
-			Interessado interessado = new Interessado(categoria, nomeInteressado, notificarInteresado, email);
+			String cpf = null;
+			Interessado interessado = new Interessado(categoria, nomeInteressado, notificarInteresado, email, cpf);
 			this.abrirProcessos.preencherFormularioDeDadosDoInteressado(interessado);
 		}
 		@Quando("clicar no botao inserir")
@@ -114,6 +135,8 @@ public class AbrirProcessosSteps {
 		}
 		@Entao("a mensagem {string} deve aparecer")
 		public void a_mensagem_deve_aparecer(String string) {
+			String mensagemInteressadoAdicionado = this.abrirProcessos.getMensagem();
+			Assert.assertEquals("Interessado adicionado com sucesso.",mensagemInteressadoAdicionado);
 		}
 		@Entao("o interessado deve ser inserido")
 		public void o_interessado_deve_ser_inserido() {;
@@ -125,7 +148,8 @@ public class AbrirProcessosSteps {
 			String nomeInteressado = "ELEILDES SILVA DE SOUZA";
 			boolean notificarInteresado = true; //false
 			String email = "eleildes.souza!!@hotmail.com";
-			Interessado interessado = new Interessado(categoria, nomeInteressado, notificarInteresado, email);
+			String cpf = null;
+			Interessado interessado = new Interessado(categoria, nomeInteressado, notificarInteresado, email, cpf);
 			this.abrirProcessos.preencherFormularioDeDadosDoInteressado(interessado);
 			this.abrirProcessos.botaoInserirInteressado();
 		}
@@ -136,9 +160,15 @@ public class AbrirProcessosSteps {
 		@Quando("confirmar o Alert")
 		public void confirmar_o_alert() {
 			this.abrirProcessos.confirmarAlert();
+			
+			if(this.abrirProcessos.verificarTelaDeCi()) {
+				this.abrirProcessos.reload();
+			}
 		}
 		@Entao("a mensagem de erro {string} deve aparecer")
 		public void a_mensagem_de_erro_deve_aparecer(String string) {
+			String mensagemInteressadoRemovido = this.abrirProcessos.getMensagem();
+			Assert.assertEquals("Interessado removido com sucesso.",mensagemInteressadoRemovido);
 		}
 		@Entao("o interessado deve ser excluido")
 		public void o_interessado_deve_ser_excluido() {

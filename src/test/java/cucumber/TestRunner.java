@@ -11,9 +11,9 @@ import io.cucumber.junit.CucumberOptions;
 				//"classpath:features/login/login.feature",
 				//"classpath:features/abrirProcessos/caminhos.feature",
 				//"classpath:features/abrirProcessos/abrirProcessos.feature",
-				"classpath:features/abrirProcessos/interessado",
+				"classpath:features/abrirProcessos",
 				}, 
-		tags = "@adicionarInteressado")
+		tags = "@abrirProcessos")
 public class TestRunner {
 
 }

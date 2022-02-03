@@ -7,7 +7,7 @@ public class Interessado {
 	private String email;
 	private String cpf;
 	
-	public Interessado(String categoria, String nomeInteressado, boolean notificarInteresado, String email) {
+	public Interessado(String categoria, String nomeInteressado, boolean notificarInteresado, String email, String cpf) {
 		this.categoria = categoria;
 		this.nomeInteressado = nomeInteressado;
 		this.notificarInteresado = notificarInteresado;
