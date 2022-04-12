@@ -1,12 +1,18 @@
 package testes.protocolo.processos.abriProcesso.pages;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import testes.PageObject;
 import testes.interessado.Interessado;
@@ -80,6 +86,7 @@ public class AbrirProcessoPage extends PageObject{
 		}
 		//Remover Classificação CONARQ
 		public void botaoRemoverClassificacao() throws InterruptedException {
+			Thread.sleep(200);
 			this.driver.findElement(By.id("dadosGeraisForm:removerConarq")).click();
 			Thread.sleep(500);
 		}
@@ -96,30 +103,93 @@ public class AbrirProcessoPage extends PageObject{
 				
 //preencher formularios de adicionar interessado
 	//Categoria de  interessado
-	public void categoriaDeInteressado(Interessado interessado) {
+	public void categoriaDeInteressado(Interessado interessado) throws InterruptedException {
 		String cssSelectorNomeServidor = "#dadosGeraisForm\\:nome" + interessado.getCategoria();
-		switch (interessado.getCategoria()) {
-			case "Servidor": this.driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select")).sendKeys(Keys.ENTER);
-			case "Aluno": this.driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select")).sendKeys(Keys.DOWN, Keys.ENTER);
-			case "Credor": this.driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select")).sendKeys(Keys.DOWN, Keys.DOWN, Keys.ENTER);
-			case "Unidade": this.driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select")).sendKeys(Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.ENTER);
-			case "Outros":
-				this.driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select")).sendKeys(Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.ENTER);
-				this.driver.findElement(By.name("dadosGeraisForm:cpf_cnpj_outros")).click();
-				this.driver.findElement(By.name("dadosGeraisForm:cpf_cnpj_outros")).sendKeys(interessado.getCpf());
+		System.out.println(interessado.getCategoria());
+		if(interessado.getCategoria().equals("Servidor")) {
+			WebElement selectElement = driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select"));
+			Select selectObject = new Select(selectElement);
+			//selectObject.selectByIndex(1);
+			//selectObject.selectByValue("1");
+			selectObject.selectByVisibleText("Servidor");
+			}
+		else if(interessado.getCategoria().equals("Aluno")) {
+			WebElement selectElement = driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select"));
+			Select selectObject = new Select(selectElement);
+			//selectObject.selectByIndex(2);
+			//selectObject.selectByValue("2");
+			selectObject.selectByVisibleText("Aluno");
+			}
+		else if(interessado.getCategoria().equals("Credor")) {
+			WebElement selectElement = driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select"));
+			Select selectObject = new Select(selectElement);
+			selectObject.selectByVisibleText("Credor");
 		}
+		else if(interessado.getCategoria().equals("Unidade")) {
+			WebElement selectElement = driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select"));
+			Select selectObject = new Select(selectElement);
+			selectObject.selectByVisibleText("Unidade");
+		}
+		else if(interessado.getCategoria().equals("Outros")) {
+			WebElement selectElement = driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select"));
+			Select selectObject = new Select(selectElement);
+			selectObject.selectByVisibleText("Outros");
+			//this.driver.findElement(By.cssSelector("#dadosGeraisForm > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > select")).sendKeys(Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.ENTER);
+			System.out.println("teste 01");
+			this.driver.findElement(By.cssSelector("#dadosGeraisForm\\:cpf_cnpj_outros")).click();
+			this.driver.findElement(By.cssSelector("#dadosGeraisForm\\:cpf_cnpj_outros")).sendKeys(interessado.getCpf());
+			this.driver.findElement(By.cssSelector("#dadosGeraisForm\\:cpf_cnpj_outros")).sendKeys(Keys.TAB);
+		}
+		System.out.println("teste 03");
 	}
 	//Nome do interessado
 	public void nomeDoInteressado(Interessado interessado) throws InterruptedException {
-		String cssSelectorNomeServidor = "#dadosGeraisForm\\:nome" + interessado.getCategoria();
-		if(interessado.getCategoria() == "Credor") {//Gambiarra
-			cssSelectorNomeServidor = cssSelectorNomeServidor + "Interessado";
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		String idSelectorNomeInteressado = "dadosGeraisForm:";
+		if(!interessado.getCategoria().equals("Unidade")) {//Gambiarra
+			idSelectorNomeInteressado = idSelectorNomeInteressado + "nome";
 		}
-		this.driver.findElement(By.cssSelector(cssSelectorNomeServidor)).click();
-		this.driver.findElement(By.cssSelector(cssSelectorNomeServidor)).sendKeys(interessado.getNomeInteressado());
+		if(!interessado.getCategoria().equals("Outros")) {//Gambiarra
+			if(interessado.getCategoria().equals("Unidade")) {//Gambiarra
+				idSelectorNomeInteressado = idSelectorNomeInteressado + (interessado.getCategoria()).toLowerCase();
+			}
+			else {
+				idSelectorNomeInteressado = idSelectorNomeInteressado + interessado.getCategoria();
+			}
+		}
+		if(interessado.getCategoria().equals("Outros") || interessado.getCategoria().equals("Servidor")) {
+			idSelectorNomeInteressado = idSelectorNomeInteressado + "Interessado";
+		}
+		System.out.println(idSelectorNomeInteressado);
+		System.out.println(idSelectorNomeInteressado == "dadosGeraisForm:nomeServidorInteressado");
+		this.driver.findElement(By.id(idSelectorNomeInteressado)).click();
+		//"dadosGeraisForm:nomeServidorInteressado" 	
+		//"dadosGeraisForm:nomeAluno"
+		//"dadosGeraisForm:nomeCredor"
+		//"dadosGeraisForm:unidade" 
+		//"dadosGeraisForm:nomeInteressado"
+	
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		this.driver.findElement(By.id(idSelectorNomeInteressado)).sendKeys(interessado.getNomeInteressado());
 		Thread.sleep(2000);
-		this.driver.findElement(By.cssSelector(cssSelectorNomeServidor)).sendKeys(Keys.TAB);
+		this.driver.findElement(By.id(idSelectorNomeInteressado)).sendKeys(Keys.TAB);
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		emailDoInteressado(interessado);
 	}
+	//email do interessado
+		public void emailDoInteressado(Interessado interessado) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+			if (!interessado.getCategoria().equals("Outros")) {
+				wait.until(ExpectedConditions
+						.textToBePresentInElementValue
+						(By.id("dadosGeraisForm:email"), interessado.getEmail()));
+			}
+			else {
+				this.driver.findElement(By.id("dadosGeraisForm:email"))
+						.sendKeys(interessado.getEmail());
+			}	
+		}
 	//Notificar interessado ?
 	public void notificarInteressado(Interessado interessado) {
 		if(interessado.isNotificarInteresado() == true) {
@@ -129,11 +199,6 @@ public class AbrirProcessoPage extends PageObject{
 		else {
 			this.driver.findElement(By.cssSelector("#dadosGeraisForm\\:notificarInteressado\\:1")).click();
 		}
-	}
-	//email do interessado
-	public void emailDoInteressado(Interessado interessado) {
-		this.driver.findElement(By.name("dadosGeraisForm:email")).clear();
-		this.driver.findElement(By.name("dadosGeraisForm:email")).sendKeys(interessado.getEmail(), Keys.TAB);	
 	}
 		
 //preencher formularios de abrir processos
@@ -231,7 +296,43 @@ public class AbrirProcessoPage extends PageObject{
 		catch (NoSuchElementException e) {
 			return false;
 		}
+	}
+
+	public List<String> getInteressado() {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));	
+		List <String> interessado = new ArrayList<String>();
+		interessado.add(driver.findElement(By.xpath("//*[@id=\"dadosGeraisForm:j_id_jsp_2064664619_182:0:j_id_jsp_2064664619_195\"]")).getText());
+		interessado.add(driver.findElement(By.xpath("//*[@id=\"dadosGeraisForm:j_id_jsp_2064664619_182:0:j_id_jsp_2064664619_198\"]")).getText());
+		interessado.add(driver.findElement(By.xpath("//*[@id=\"dadosGeraisForm:j_id_jsp_2064664619_182:0:j_id_jsp_2064664619_200\"]")).getText());
+		interessado.add(driver.findElement(By.xpath("//*[@id=\"dadosGeraisForm:j_id_jsp_2064664619_182:0:j_id_jsp_2064664619_203\"]")).getText());
+		
+		return interessado;
 	}	
+	
+	public boolean verificarClassificacaoConarq() throws InterruptedException {
+		boolean vazio = ((this.driver.findElement(By.id("dadosGeraisForm:classificacaoConarq")).getText()).equals(""));
+		return vazio;
+	}
+
+	public boolean elementoExiste(String elemento) {
+//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//		if (!interessado.getCategoria().equals("Outros")) {
+//			wait.until(ExpectedConditions
+//					.textToBePresentInElementValue
+//					(By.id("dadosGeraisForm:email"), interessado.getEmail()));
+//		}
+//		else {
+//			this.driver.findElement(By.id("dadosGeraisForm:email"))
+//					.sendKeys(interessado.getEmail());
+//		}
+		try {
+			driver.findElement(By.xpath(elemento)).getText();
+			return true;
+		} 
+		catch (NoSuchElementException e) {
+			return false;
+		}
+	}
 }
 
 

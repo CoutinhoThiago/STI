@@ -29,7 +29,7 @@ public class LoginSteps {
 	//});
 
 	//Contexto
-	@Dado("^um usuario na pagina de login$")
+	@Dado("um usuario na pagina de login")
 	public void um_usuario_na_pagina_de_login() throws Throwable {
 		this.paginaDeLogin.caminhoAteAPaginaDeLogin();
 	}

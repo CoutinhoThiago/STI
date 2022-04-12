@@ -5,14 +5,18 @@ public class Interessado {
 	private String nomeInteressado;
 	private boolean notificarInteresado;
 	private String email;
+	
+	private String identificador;
 	private String cpf;
 	
-	public Interessado(String categoria, String nomeInteressado, boolean notificarInteresado, String email, String cpf) {
+	public Interessado(String categoria, String nomeInteressado, boolean notificarInteresado, String email, String identificador) {
 		this.categoria = categoria;
 		this.nomeInteressado = nomeInteressado;
 		this.notificarInteresado = notificarInteresado;
 		this.email = email;
-		this.cpf = cpf;
+		if (this.categoria.equals("Outros")) {
+			this.cpf = identificador;
+		}
 	}
 	
 	public String getCategoria() {

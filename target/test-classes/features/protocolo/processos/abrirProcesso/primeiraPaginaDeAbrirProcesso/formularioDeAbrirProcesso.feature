@@ -9,18 +9,15 @@ Contexto:
 			| tcoutinho | Coutinho.123 |
 		E o usuario na primeira pagina de abrir processos
 	
-	@abrirProcesso
-	@primeiraPaginaDeAbrirProcessos
-	@formulariodeAbrirProcessos
-	Esquema do Cenario: Abrir processo do '<Tipo>' com interessado do tipo '<Categoria>'
+#-----formulario de Abrir Processos-----
+
+	@formularioDeAbrirProcessos
+	Esquema do Cenario: Abrir processo do tipo '<Tipo>' com interessado do tipo '<Categoria>'
+		Dado o usuario na primeira pagina de abrir processos
+		E um interessado do tipo '<Categoria>' adicionado
 		Quando selecionar a opcao precesso '<Tipo>'
 		E preencher o forrmilario de abrir processo
-		E preencher o forrmilario de adicionar interessado 
-		E clicar em inserir
-		Entao o interessado deve ser adicionado 
-		E o interessado deve aparecer corretamente com os dados corretos
-		E a mensagem de usuario adicinado com sucesso deve aparecer	
-		Quando clicar em continuar 	
+		E clicar em continuar 	
 		Entao o usuario deve ser redirecionado para segunda pagina de abrir processos
 		E os dados cadastrados no formulario Dados Gerais do Processo estao corretos
 		E os dados cadastrados no formulario Dados do Interessado estao corretos

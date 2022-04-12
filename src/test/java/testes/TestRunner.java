@@ -8,13 +8,10 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class) 
 @CucumberOptions(
 		features = {
-				//Login
-				"classpath:features/login/login.feature",
-				//Abrir Processos
-				"classpath:features/protocolo/processos/abrirProcesso/abrirProcesso.feature",
 				}, 
 		
 		tags = "",
+		glue = "",
 				
 		monochrome = true, 
 		dryRun = false,

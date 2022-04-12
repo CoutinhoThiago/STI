@@ -3,7 +3,9 @@ package testes;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class PageObject {
@@ -25,8 +27,15 @@ public class PageObject {
 		return driver.getCurrentUrl();
 	}
 	//Confirmar alert
-	public void confirmarAlert() {
+	public void confirmarAlert() throws NoSuchElementException {
 		driver.switchTo().alert().accept();
+		try { //gambiarra
+			String CI = driver.findElement(By.xpath("//*[@id=\"mensagem-erro\"]/h3")).getText();//*[@id="mensagem-erro"]/h3
+			if (CI.equals("Comportamento Inesperado!")) {
+				this.driver.navigate().refresh();
+			}
+		} 
+		catch (NoSuchElementException e) {}
 	}
 	//Fechar as abas no final
     public void fechar() {

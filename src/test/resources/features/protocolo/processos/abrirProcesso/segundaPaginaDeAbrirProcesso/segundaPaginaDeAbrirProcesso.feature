@@ -11,24 +11,18 @@ Contexto:
 	@segundaPaginaDeAbrirProcessos
 	@botaoCancelar
 	Esquema do Cenario: botoao '<Botao>' funcionando corretamente para processo do '<Tipo>' com interessado do tipo '<Categoria>'
-		Dado um processodo tipo '<Tipo>' com interessado do tipo '<Categoria>' adicionado
-		E o usuario na segunda pagina de abrir processos
-		Quando clicar no botao '<Botao>'
-		E confirmar o pop-up
-		Entao O usuario devera ser redirecionado para a pagina inicial da mesa virtual
+				#Dado o usuario na primeira pagina de abrir processos
+		Quando preencher o formulario de Dados do Interessado '<Categoria>' '<NOME>' '<EMAIL>'
+		E clicar no botao inserir
+		Entao a mensagem interessado adicionado com sucesso deve aparecer
+		E o interessado deve ser inserido
 	Exemplos:
-		| Tipo 					 | Categoria | Botao     |
-		
-		| Eletronico 		 | Servidor  | Cancelar  |
-		| Eletronico		 | Aluno     | Cancelar  | 
-		| Eletronico		 | Unidade   | Cancelar  |
-		| Eletronico		 | Credor    | Cancelar  |
-		| Eletronico		 | Outros    | Cancelar  |
-		| Nao Eletronico | Servidor  | Cancelar  |
-		| Nao Eletronico | Aluno     | Cancelar  |
-		| Nao Eletronico | Unidade   | Cancelar  |
-		| Nao Eletronico | Credor    | Cancelar  |
-		| Nao Eletronico | Outros    | Cancelar  |
+		| Categoria | NOME                                                | EMAIL                       |  
+		| Servidor  | ELEILDES SILVA DE SOUZA                             | eleildessouza12!!@gmail.com |
+		| Aluno     | THIAGO COUTINHO SOUSA SILVA                         | thiago.coutinho!!@ufba.br   |
+		| Credor    | UFBA - UNIVERSIDADE FEDERAL DA BAHIA                | ufba!!@ufba.br              |
+		| Unidade   | SUPERINTENDÊNCIA DE TECNOLOGIA DA INFORMAÇÃO /UFBA  | sti!!@ufba.br               |
+		| Outros    | | |
 		
 	@abrirProcesso
 	@segundaPaginaDeAbrirProcessos

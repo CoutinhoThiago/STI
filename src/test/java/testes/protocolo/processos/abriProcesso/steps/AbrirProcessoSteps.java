@@ -1,9 +1,13 @@
 package testes.protocolo.processos.abriProcesso.steps;
 
+import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
@@ -24,7 +28,7 @@ public class AbrirProcessoSteps {
 	}
 	@After
 	public void fim() {
-		this.abrirProcessos.fechar();
+		//this.abrirProcessos.fechar();
 	}
 	
 	//Contexto Geral
@@ -101,8 +105,14 @@ public class AbrirProcessoSteps {
 	public void confirmar_o_pop_up() {
 		this.abrirProcessos.confirmarAlert();
 	}
-	@Entao("o usuario devera ser redirecionado para a pagina inicial da mesa virtual")
-	public void o_usuario_devera_ser_redirecionado_para_a_pagina_inicial_da_mesa_virtual() {
+	@Entao("o usuario devera ser redirecionado para a pagina anterior")
+	public void o_usuario_devera_ser_redirecionado_para_a_pagina_anterior() {
+		String url = this.abrirProcessos.getUrl();
+		boolean paginaAntwerior = (
+				url.equals("https://homologacaosipac.ufba.br/sipac/protocolo/menu.jsf") ||
+				url.equals("https://homologacaosipac.ufba.br/sipac/protocolo/mesa_virtual/lista.jsf") ||
+				url.equals("https://homologacaosipac.ufba.br/sipac/portal_administrativo/index.jsf"));
+		Assert.assertTrue(paginaAntwerior);
 	}
 	//Botao Remover Classificacao CONARQ
 	@Quando("adicionar uma classificacao CONARQ")
@@ -114,10 +124,13 @@ public class AbrirProcessoSteps {
 		this.abrirProcessos.botaoRemoverClassificacao();
 	}
 	@Entao("a Classificacao CONARQ deve ser removida")
-	public void a_classificacao_conarq_deve_ser_removida() {
+	public void a_classificacao_conarq_deve_ser_removida() throws InterruptedException {
+		Assert.assertTrue(this.abrirProcessos.verificarClassificacaoConarq());
 	}
 	@Entao("a mensagem de classificacao CONARQ removida deve aparecer")
 	public void a_mensagem_de_classificacao_conarq_removida_deve_aparecer() {
+		String mensagem = this.abrirProcessos.getMensagem();
+		Assert.assertEquals(mensagem, "Classificação CONARQ removida com sucesso!");
 	}
 	
 //Interessado
@@ -137,25 +150,47 @@ public class AbrirProcessoSteps {
 	public void a_mensagem_email_obrigatorio_nao_informado_deve_aparecer() {
 	}
 	//Adicionar Interessado corretamente
-	@Quando("preencher o formulario de Dados do Interessado")
-	public void preencher_o_formulario_de_dados_do_interessado() throws InterruptedException {
-		interessado = new Interessado(null, null, false, null, null);
-		this.abrirProcessos.categoriaDeInteressado(interessado);
-		this.abrirProcessos.nomeDoInteressado(interessado);
-		this.abrirProcessos.notificarInteressado(interessado);
+	@Quando("preencher o formulario de Dados do Interessado {string} {string} {string} {string}")
+	public void preencher_o_formulario_de_dados_do_interessado
+	(String categoria, String nome, String email, String identificador) throws InterruptedException {
+		
+		interessado = new Interessado(categoria, nome, false, email, identificador);
+		this.abrirProcessos.categoriaDeInteressado(this.interessado);
+		this.abrirProcessos.nomeDoInteressado(this.interessado);
+		//this.abrirProcessos.notificarInteressado(interessado);
 	}
 	@Entao("o interessado deve ser inserido")
 	public void o_interessado_deve_ser_inserido() {
+		List <String> dados = new ArrayList<String>();
+		dados = this.abrirProcessos.getInteressado();
+		
+		String gambiarraNome = 
+				Normalizer.normalize(
+						dados.get(1), 
+						Normalizer.Form.NFD)
+				.replaceAll("[^\\p{ASCII}]", ""); //gambiarra p tirar os aecentos
+
+		//Assert.assertEquals(gambiarraNome, interessado.getNomeInteressado());//"ELEILDES SILVA DE SOUZA"
+		Assert.assertEquals(dados.get(2), interessado.getEmail());//"eleildessouza12!!@gmail.com"
+		String tipo = interessado.getCategoria();
+		if (interessado.getCategoria().equals("Aluno")) {
+			tipo = interessado.getCategoria() + " Graduação";
+		}
+		Assert.assertEquals(dados.get(3), tipo);
 	}
 	@Entao("a mensagem interessado adicionado com sucesso deve aparecer")
 	public void a_mensagem_interessado_adicionado_com_sucesso_deve_aparecer() {
+		String mensagem = this.abrirProcessos.getMensagem();
+		Assert.assertEquals(mensagem, "Interessado adicionado com sucesso.");
 	}
 	//Remover Interessado
-	@Quando("inserir um interessado do tipo {string}")
-	public void inserir_um_interessado_do_tipo(String string) throws InterruptedException {
-		this.abrirProcessos.categoriaDeInteressado(interessado);
-		this.abrirProcessos.nomeDoInteressado(interessado);
-		this.abrirProcessos.notificarInteressado(interessado);
+	@Quando("inserir um interessado do tipo {string} {string} {string} {string}")
+	public void inserir_um_interessado_do_tipo
+	(String categoria, String nome, String email, String identificador) throws InterruptedException {
+			
+		interessado = new Interessado(categoria, nome, false, email, identificador);
+		this.abrirProcessos.categoriaDeInteressado(this.interessado);
+		this.abrirProcessos.nomeDoInteressado(this.interessado);
 		
 		this.abrirProcessos.botaoInserirInteressado();
 	}
@@ -165,9 +200,15 @@ public class AbrirProcessoSteps {
 	}
 	@Entao("o interessado deve ser removido")
 	public void o_interessado_deve_ser_removido() {
+		String identificador = "//*[@id=\"dadosGeraisForm:j_id_jsp_2064664619_182:0:j_id_jsp_2064664619_198\"]";
+		
+		boolean elementoExiste = this.abrirProcessos.elementoExiste(identificador);
+		Assert.assertFalse(elementoExiste);
 	}
 	@Entao("a mensagem interessado removido com sucesso deve aparecer")
 	public void a_mensagem_interessado_removido_com_sucesso_deve_aparecer() {
+		String mensagem = this.abrirProcessos.getMensagem();
+		Assert.assertEquals(mensagem, "Interessado removido com sucesso.");
 	}
 	
 //Abrir Processo

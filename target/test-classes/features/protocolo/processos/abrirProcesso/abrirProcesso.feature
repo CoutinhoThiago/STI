@@ -1,7 +1,7 @@
 #language: pt
 
 @abrirProcesso
-Funcionalidade: Abrir Processos
+Funcionalidade: Abrir Processo
 
 Contexto:
 		Dado um usuario que possui as credenciais corretas logado
@@ -131,8 +131,6 @@ Contexto:
 		| Nao Eletronico | Unidade   |
 		| Nao Eletronico | Credor    |
 		| Nao Eletronico | Outros    |	
-		
-		
 		
 		
 		

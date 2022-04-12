@@ -16,7 +16,7 @@ Contexto:
 	Cenario: Botao cancelar funcionando corretamente
 		Quando clicar no botao cancelar
 		E confirmar o pop-up
-		Entao o usuario devera ser redirecionado para a pagina inicial da mesa virtual
+		Entao o usuario devera ser redirecionado para a pagina anterior
 		
 	@abrirProcesso
 	@primeiraPaginaDeAbrirProcessos
@@ -43,12 +43,16 @@ Contexto:
 		Dado 
 		Quando 
 		Entao 
-			
-	@abrirProcesso
-	@primeiraPaginaDeAbrirProcessos
-	@botoes
-	@botaoInserir
-	Cenario: Botao inserir funcionando corretamente
-		Dado 
-		Quando 
-		Entao 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
