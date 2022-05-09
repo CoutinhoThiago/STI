@@ -12,26 +12,26 @@ Funcionalidade: Login
     Quando deixar os campos em branco
     E clica em entrar
     Entao o usuario deve permanecer na paina de login
-    E a mensagem de erro "Informe o login do usuÃ¡rio" deve aparecer
-    #Informe a senha do usuÃ¡rio
+    E a mensagem de erro "Informe o login do usuário" deve aparecer
+    #Informe a senha do usuário
 
 	@login
   Cenario: Tentar logar com as credenciais incorretas
     Dado um usuario que possui as credenciais incorretas
     Quando preenche os campos com as credenciais incorretas
 			| login     | senha        |
-			| invalido  |  |
+			| invalido  | Coutinho.123 |
 			| tcoutinho | invalido     |
     E clica em entrar
     Entao o usuario deve permanecer na paina de login
-    E a mensagem de erro "UsuÃ¡rio e/ou senha invÃ¡lidos" deve aparecer
+    E a mensagem de erro "Usuário e/ou senha inválidos" deve aparecer
     
   @login
   Cenario: Logar com as credenciais corretas
     Dado um usuario que possui as credenciais corretas
     Quando preenche os campos com as credenciais corretas
     	| login     | senha        |
-			| tcoutinho |  |
+			| tcoutinho | Coutinho.123 |
     E clica em entrar
     Entao o usuario deve ser redirecionado para a pagina inicial do sipac
     E deve ser mostrado como usuario logado

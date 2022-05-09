@@ -6,7 +6,7 @@ Funcionalidade: Abrir Processo
 Contexto:
 		Dado um usuario que possui as credenciais corretas logado
     	| login     | senha        |
-			| tcoutinho |  |
+			| tcoutinho | Coutinho.123 |
   
 #-----Caminhos-----
 	@caminhos
