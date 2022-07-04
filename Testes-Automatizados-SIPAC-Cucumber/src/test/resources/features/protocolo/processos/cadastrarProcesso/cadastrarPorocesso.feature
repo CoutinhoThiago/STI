@@ -7,7 +7,7 @@ Funcionalidade: Cadastrar Processos
 Contexto:
 		Dado um usuario que possui as credenciais corretas logado
     	| login     | senha        |
-			| tcoutinho | Coutinho.123 |
+			| tcoutinho |  |
 
 #Caminhos----------------------------------------------------------------------------------------------------
     
