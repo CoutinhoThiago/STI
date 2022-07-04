@@ -6,7 +6,7 @@ Funcionalidade: Formulario de Abrir Processos
 Contexto:
 		Dado um usuario que possui as credenciais corretas logado
     	| login     | senha        |
-			| tcoutinho | Coutinho.123 |
+			| tcoutinho |  |
 		E o usuario na primeira pagina de abrir processos
 	
 #-----formulario de Abrir Processos-----
