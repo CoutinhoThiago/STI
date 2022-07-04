@@ -6,7 +6,7 @@ Funcionalidade: Botoes
 Contexto:
 		Dado um usuario que possui as credenciais corretas logado
     	| login     | senha        |
-			| tcoutinho | Coutinho.123 |
+			| tcoutinho |  |
 	Dado o usuario na primeira pagina de abrir processos
 	
 	@abrirProcesso
