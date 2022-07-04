@@ -8,7 +8,7 @@ Funcionalidade: Interessado
 Contexto:
 		Dado um usuario que possui as credenciais corretas logado
     	| login     | senha        |
-			| tcoutinho | Coutinho.123 |
+			| tcoutinho |  |
 		Dado o usuario na primeira pagina de abrir processos
 		
 #-----Interessado-----	
@@ -40,7 +40,7 @@ Contexto:
 		| Servidor  | ELEILDES SILVA DE SOUZA                            | eleildessouza12!!@gmail.com |               |
 		| Aluno     | THIAGO COUTINHO SOUSA SILVA                        | thiago.coutinho!!@ufba.br   |               |
 		| Credor    | UFBA - UNIVERSIDADE FEDERAL DA BAHIA               | ufba!!@ufba.br              |               |
-#		| Unidade   | SUPERINTENDÊNCIA DE TECNOLOGIA DA INFORMAÇÃO /UFBA | sti!!@ufba.br               | 120142        |
+#		| Unidade   | SUPERINTENDÃŠNCIA DE TECNOLOGIA DA INFORMAÃ‡ÃƒO /UFBA | sti!!@ufba.br               | 120142        |
 		| Unidade   | SUPERINTENDENCIA DE TECNOLOGIA DA INFORMACAO /UFBA | sti!!@ufba.br               | 120142        |
 		| Outros    | USUARIO DE TESTES ALEATORIO                        | aleatorio@aleatorio.com     | 99999999999   | 
 		#DANYELLE TAURYCE BROWN-WILLIS -> MUDA P ESSA MULHER N SEI PQ
